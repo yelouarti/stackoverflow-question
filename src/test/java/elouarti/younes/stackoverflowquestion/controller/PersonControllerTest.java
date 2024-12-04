@@ -47,8 +47,8 @@ class PersonControllerTest {
     }
 
     @Test
-    void test_namesByLastnameIndividual(){
-        Flux<HalResourceWrapper<Person, Void>> actual = personController.namesByLastnameIndividual("Smith");
+    void test_personsByLastnameIndividual(){
+        Flux<HalResourceWrapper<Person, Void>> actual = personController.personsByLastnameIndividual("Smith");
 
         StepVerifier.create(actual)
                 .assertNext( wrapper -> {
@@ -93,8 +93,8 @@ class PersonControllerTest {
     }
 
     @Test
-    void test_namesByLastnameAsList(){
-    Mono<HalListWrapper<Person, Void>> actual = personController.namesByLastnameAsList("Smith");
+    void test_personsByLastnameAsList(){
+    Mono<HalListWrapper<Person, Void>> actual = personController.personsByLastnameAsList("Smith");
 
         StepVerifier.create(actual)
             .assertNext( wrapper -> {

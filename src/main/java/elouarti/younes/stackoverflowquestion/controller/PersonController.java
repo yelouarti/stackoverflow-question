@@ -39,8 +39,8 @@ public class PersonController {
     }
 
     @GetMapping("/people-individual")
-    Flux<HalResourceWrapper<Person, Void>> namesByLastnameIndividual(@RequestParam
-                                                                     String lastname) {
+    Flux<HalResourceWrapper<Person, Void>> personsByLastnameIndividual(@RequestParam
+                                                                       String lastname) {
         Flux<Person> result = people.findByLastname(lastname);
         return result.map(person -> HalResourceWrapper.wrap(person)
                 .withLinks(
@@ -52,17 +52,17 @@ public class PersonController {
     }
 
     @GetMapping("/people-as-list")
-    Mono<HalListWrapper<Person, Void>> namesByLastnameAsList(@RequestParam
-                                                             String lastname) {
+    Mono<HalListWrapper<Person, Void>> personsByLastnameAsList(@RequestParam
+                                                               String lastname) {
         Flux<HalResourceWrapper<Person, Void>> wrappedFullNames;
-        wrappedFullNames = namesByLastnameIndividual(lastname);
+        wrappedFullNames = personsByLastnameIndividual(lastname);
 
         return wrappedFullNames
                 .collectList()
                 .map(fullNames -> HalListWrapper.wrap(fullNames)
                         .withLinks(
                                 linkTo(PersonController.class,
-                                        controller -> controller.namesByLastnameAsList(lastname)
+                                        controller -> controller.personsByLastnameAsList(lastname)
                                 ).withSelfRel()
                         )
                 );
